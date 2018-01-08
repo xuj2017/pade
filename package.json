@@ -18,6 +18,10 @@
   "bin": {
     "pade": "./pade.js"
   },
+  "repository": {
+    "type": "git",
+    "url":"https://github.com/xuj2017/pade.git"
+  },
   "dependencies": {
     "yargs": "^10.0.3"
   }
