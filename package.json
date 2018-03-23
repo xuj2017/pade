@@ -1,7 +1,6 @@
 {
   "name": "pade",
   "version": "0.0.0",
-  "private": true,
   "bin": {
     "pade": "./pade.js"
   },
