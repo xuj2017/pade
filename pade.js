@@ -25,6 +25,7 @@ if (!files.exists('./pade.config.json')) {
 const jsonfile = require('jsonfile');
 global.config = jsonfile.readFileSync('./pade.config.json'); //项目设置
 
+console.log(global.config.server_port)
 app(global.config.server_port).then(function () {
     let opn = require('opn');
     opn('http://localhost:' + global.config.server_port + '/', {

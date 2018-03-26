@@ -1,0 +1,166 @@
+<h3>页面 Page{{title}}</h3>
+
+<div class="pageblock">
+    <h5>页面列表(page)
+        <a href="javascript:;" id="create_page_btn" data-target="#create_page_template" class="btn btn-inverse btn-sm">
+            <span class="fui-plus"></span> 新建页面</a>
+    </h5>
+    <div id="pagelist">
+        <table class="table table-striped table-hover vam center">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>大小</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each basePage}}
+                <tr>
+                    <td>
+                        <strong>{{filename}}</strong>
+                    </td>
+                    <td>{{showTime ctime}}</td>
+                    <td>{{showTime mtime}}</td>
+                    <td>{{showFileSize size}}</td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm" target="_blank">预览</a>
+                        <a href="#" class="btn btn-success btn-sm change_layout_btn" target="_blank">布局页</a>
+                        <a href="#" class="btn btn-info btn-sm page_data_btn" target="_blank">模板数据</a>
+                        <a href="#" class="btn btn-success btn-sm " target="_blank">源代码</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="pageblock">
+    <h5>布局页列表(page/_layout)
+        <a href="javascript:;" id="create_layout_btn" class="btn btn-inverse btn-sm">
+            <span class="fui-plus"></span> 新建布局页</a>
+    </h5>
+    <div id="layoutlist">
+        <table class="table table-striped table-hover table-vam">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>大小</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each layoutPage}}
+                <tr>
+                    <td>
+                        <strong>{{filename}}</strong>
+                    </td>
+                    <td>{{showTime ctime}}</td>
+                    <td>{{showTime mtime}}</td>
+                    <td>{{showFileSize size}}</td>
+                    <td>
+                        <a href="#" data-filename="{{filename}}" data-path="{{path}}" class="btn btn-info btn-sm page_data_btn">
+                            <span class="fui-list-columned"></span> 模板数据</a>
+                        <a href="/codeview?path={{path}}" target="_blank" class="btn btn-success btn-sm">
+                            <span class="fui-document"></span> 源代码</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="pageblock">
+    <h5>局部页列表(page/_partial)
+        <a href="javascript:;" id="create_partial_btn" class="btn btn-inverse btn-sm">
+            <span class="fui-plus"></span> 新建局部页</a>
+    </h5>
+    <div id="partiallist">
+        <table class="table table-striped table-hover table-vam">
+            <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>大小</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each partialPage}}
+                <tr>
+                    <td>
+                        <strong>{{filename}}</strong>
+                    </td>
+                    <td>{{showTime ctime}}</td>
+                    <td>{{showTime mtime}}</td>
+                    <td>{{showFileSize size}}</td>
+                    <td>
+                        <a href="#" data-filename="{{filename}}" data-path="{{path}}" class="btn btn-info btn-sm page_data_btn">
+                            <span class="fui-list-columned"></span> 模板数据</a>
+                        <a href="/codeview?path={{path}}" target="_blank" class="btn btn-success btn-sm">
+                            <span class="fui-document"></span> 源代码</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{!-- <div id="create_page_template"> --}}
+    <div class="modal fade" id="create_page_template">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h6 class="modal-title">新建页面</h6>
+        </div>
+        <form action="" id="create_page_form">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label class="control-label" for="page_name">页面名称 <span class="required">*</span> <span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" data-placement="right" data-original-title="只能使用英文数字和下划线减号做文件名"></span></label>
+              <input class="form-control" id="page_name" type="text" pattern="[A-z0-9_-]+" required>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="page_layout">选择布局页 (Layout)</label>
+              <select name="" id="page_layout" class="form-control select select-primary" data-toggle="select">
+                {{#each layoutPage}}
+                <option value="{{name}}">{{name}}</option>
+                {{/each}}
+                <option value="">不使用布局页</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <div class="control_check_div">
+                <label class="checkbox"><input type="checkbox" class="flat_checkbox" id="extra_js"> 创建与页面同名的JS</label>
+                <label class="checkbox"><input type="checkbox" class="flat_checkbox" id="extra_less"> 创建与页面同名的Less</label>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary submitbtn">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{{!-- </div> --}}
+
+
+{{#extend "bodybottom"}}
+   {{!-- var arr =  {{JSON.stringify(layoutObj)}} --}}
+<script>    
+    var layoutArr = '{{varable layoutPage}}';
+</script>
+
+<script src="/js/page.js"></script> 
+
+{{/extend}}

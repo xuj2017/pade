@@ -63,35 +63,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-var tips = __webpack_require__(5);
-
-tips($('#tips'))
-
-$.ajax({
-    url:'/home/newver',
-    type:'GET',
-    dataType:'json',
-    success:function(json){
-        if(json.re){
-            if(json.result.isnew){
-                var html = $('<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>有新版本！ 新版本号：<span id="newver">' + json.result.newver + '</span></div>')
-                $('#hasnew').html(html)
-            }
-        }
-    }
-})
-
-/***/ }),
-
-/***/ 5:
+/******/ ([
+/* 0 */,
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports) {
 
 var tips_data = [
@@ -128,6 +106,28 @@ module.exports = function (container) {
     container.html(tips_html)
 }
 
-/***/ })
+/***/ }),
+/* 3 */,
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/******/ });
+var tips = __webpack_require__(2);
+
+tips($('#tips'))
+
+$.ajax({
+    url:'/home/newver',
+    type:'GET',
+    dataType:'json',
+    success:function(json){
+        if(json.re){
+            if(json.result.isnew){
+                var html = $('<div class="alert alert-dismissible alert-info"><button type="button" class="close" data-dismiss="alert">&times;</button>有新版本！ 新版本号：<span id="newver">' + json.result.newver + '</span></div>')
+                $('#hasnew').html(html)
+            }
+        }
+    }
+})
+
+/***/ })
+/******/ ]);

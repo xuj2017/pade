@@ -63,74 +63,63 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
-var modal_alert = __webpack_require__(8)
-
-$(':radio').radiocheck();
-
-var port  = location.port;
-$('#server_port').val(port)
-
-// modal_alert({
-//     content:'初始化成功！由于修改了端口号，请重启',
-//     onClose:function(){
-//         window.close();
-//     }
-// })
-
-$('#init_submit_btn').on('click',function(){
-    var project_name = $('#project_name').val();
-    if(!project_name){
-        return false
-    }
-    var server_port = $('#server_port').val();
-    var new_file = $('[name="new_file"]:checked').val();
-
-    console.log(1131123)
-    $.ajax({
-        url:'/init/init_project',
-        type:'POST',
-        dataType:'json',
-        data:{
-            project_name:project_name,
-            server_port:server_port,
-            new_file:new_file
-        }
-    })
-    .done(function(json){
-        console.log(json)
-        if(json.re){
-            if(server_port == port){
-                modal_alert({
-                    content:'初始化成功',
-                    onClose:function(){
-                        self.location='/';
-                    }
-                })
-            }else{
-                modal_alert({
-                    content:'初始化成功！由于修改了端口号，请重启',
-                    onClose:function(){
-                        window.close();
-                    }
-                })
-            }
-        }else{
-            modal_alert(json.message)
-        }
-    })
-    .fail(function(error){
-        console.log(error)
-        modal_alert(error.message)
-    })
+var modal_alert = __webpack_require__(8);
+var modal_confirm = __webpack_require__(7);
+// var error_message = require('./modules/error_message/error_message');
+$('#create_page_btn').click(function(){
+    $("#create_page_template").modal('show');
 })
+
+console.log(layoutArr)
+console.log(JSON.parse(layoutArr.replace(/&quot;/gi,'"')) )
+
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports) {
+
+class modal_confirm{
+    constructor(options){
+        this.option = $.extend({
+            title: '提示',
+            content: '',
+            onCancel: null,
+            onConfirm: null
+        }.options);
+    }
+    show(){
+        var html = $('<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + this.options.title + '</h4></div><div class="modal-body"><p>' + this.options.content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button> <button type="button" class="btn btn-primary">确定</button></div></div></div></div>');
+        $("body").append(html);
+        html.modal('show');
+
+        html.on('click', '.btn-primary', function(){
+            html.modal('hide');
+            if(this.options.onConfirm){
+                this.options.onConfirm();
+            }
+        }.bind(this));
+
+        html.on('hidden.bs.modal', function (e) {
+            html.remove();
+            if(this.options.onCancel){
+                this.options.onCancel();
+            }
+        }.bind(this));
+    }
+}
+
+module.exports = options =>{
+    var new_modal_confirm = new modal_confirm(options);
+    new_modal_confirm.show();
+}
 
 /***/ }),
 

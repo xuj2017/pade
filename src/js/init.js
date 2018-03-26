@@ -1,4 +1,4 @@
-var modal_alert = require('./modules/modal-alert/modal_alert')
+var modal_alert = require('./modules/modal_alert/modal_alert')
 
 $(':radio').radiocheck();
 

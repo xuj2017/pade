@@ -3,6 +3,7 @@ const exists = require('fs-exists-sync');
 const handlebars = require('handlebars');
 const mkdir = require('mkdirp');
 const path = require('path');
+const glob = require('glob');
 
 let files ={
     /**
@@ -42,10 +43,55 @@ let files ={
      * @param {any} options 参数数据
      */
     createFileByTemplate(filename,filepath,options){
-        console.log('模板')
         let template = fs.readFileSync(path.join(global.appdir,'src','template',filename+'.hbs'),'utf-8');
         let file_content = handlebars.compile(template)(options);
         this.writeFileSync(filepath,file_content)
+    },
+    /**
+     * 获取文件接班信息
+     * @param {any} globpath 文件路径
+     * @param {any} options glob配置
+     */
+    getFileBaseInfo(globpath,options){
+        return new Promise( (resolve,reject)=>{
+            glob(globpath,options,function(error,files){
+                if(error){
+                    reject(error)
+                }
+                resolve(files.map(v=>{
+                    return {
+                        name:path.basename(v,path.extname(v)),
+                        filename:path.basename(v),
+                        path:v
+                    }
+                }))
+            })
+        })
+    },
+    /**
+     * 获取文件详细信息
+     * 
+     * @param {any} globpath 文件路径
+     * @param {any} options glob配置
+     */
+    getFileInfo(globpath,options){
+        return new Promise( (resolve,reject) =>{
+            this.getFileBaseInfo(globpath,options).then(files=>{
+                resolve(files.map(v =>{
+                    let stat = fs.lstatSync(v.path)
+                    return {
+                        name:v.name,
+                        filename:v.filename,
+                        path:v.path,
+                        size:stat.size,
+                        mtime:stat.mtime,
+                        ctime:stat.atime
+                    }
+                }))
+            }).catch(error => {
+                reject(error)
+            })
+        })
     }
 }
 

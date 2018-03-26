@@ -1,4 +1,4 @@
-var modal_confirm = require('./modules/modal_confirm/modal-confirm');
+var modal_confirm = require('./modules/modal_confirm/modal_confirm');
 
 $(function () {
     setTimeout(function () {

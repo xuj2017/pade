@@ -78,6 +78,54 @@ hbs.registerHelper('randoms',function(value){
   return parseInt(value)+Math.random();
 })
 
+function fillzero(num){
+  if(num < 10){
+    return '0' + num;
+  }
+  return num.toString();
+}
+
+hbs.registerHelper('showTime', function (date) {
+  var thisdate = new Date(date);
+  return thisdate.getFullYear() + '/' + (thisdate.getMonth() + 1) + '/' + thisdate.getDate() + ' ' + thisdate.getHours() + ':' + fillzero(thisdate.getMinutes());
+});
+
+hbs.registerHelper('varable',function(data){
+  return JSON.stringify(data).toString();
+})
+
+hbs.registerHelper('showFileSize', function (size) {
+  var size = parseInt(size);
+  var out = size;
+  var hz = '';
+  if (size > 1024 * 1024) {
+    out = size / (1024 * 1024);
+    hz = 'MB';
+  }
+  else if(size > 1024){
+    out = size / 1024;
+    hz = 'KB';    
+  }
+  else{
+    hz = 'B';    
+  }
+  
+  if(size > 1024){
+    if(out >= 100){
+      out = out.toFixed(0);
+    }
+    else if(out >= 10){
+      out = out.toFixed(1);
+    }
+    else{
+      out = out.toFixed(2);
+    }    
+  }
+
+
+  return out + ' ' + hz;
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

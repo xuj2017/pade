@@ -63,54 +63,15 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */
-/***/ (function(module, exports) {
+/******/ ({
 
-class modal_confirm{
-    constructor(options){
-        this.option = $.extend({
-            title: '提示',
-            content: '',
-            onCancel: null,
-            onConfirm: null
-        }.options);
-    }
-    show(){
-        var html = $('<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + this.options.title + '</h4></div><div class="modal-body"><p>' + this.options.content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button> <button type="button" class="btn btn-primary">确定</button></div></div></div></div>');
-        $("body").append(html);
-        html.modal('show');
-
-        html.on('click', '.btn-primary', function(){
-            html.modal('hide');
-            if(this.options.onConfirm){
-                this.options.onConfirm();
-            }
-        }.bind(this));
-
-        html.on('hidden.bs.modal', function (e) {
-            html.remove();
-            if(this.options.onCancel){
-                this.options.onCancel();
-            }
-        }.bind(this));
-    }
-}
-
-module.exports = options =>{
-    var new_modal_confirm = new modal_confirm(options);
-    new_modal_confirm.show();
-}
-
-/***/ }),
-/* 2 */
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
-var modal_confirm = __webpack_require__(1);
+var modal_confirm = __webpack_require__(7);
 
 $(function () {
     setTimeout(function () {
@@ -182,5 +143,46 @@ Handlebars.registerHelper('showFileSize', function (size) {
   });
   
 
+/***/ }),
+
+/***/ 7:
+/***/ (function(module, exports) {
+
+class modal_confirm{
+    constructor(options){
+        this.option = $.extend({
+            title: '提示',
+            content: '',
+            onCancel: null,
+            onConfirm: null
+        }.options);
+    }
+    show(){
+        var html = $('<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + this.options.title + '</h4></div><div class="modal-body"><p>' + this.options.content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button> <button type="button" class="btn btn-primary">确定</button></div></div></div></div>');
+        $("body").append(html);
+        html.modal('show');
+
+        html.on('click', '.btn-primary', function(){
+            html.modal('hide');
+            if(this.options.onConfirm){
+                this.options.onConfirm();
+            }
+        }.bind(this));
+
+        html.on('hidden.bs.modal', function (e) {
+            html.remove();
+            if(this.options.onCancel){
+                this.options.onCancel();
+            }
+        }.bind(this));
+    }
+}
+
+module.exports = options =>{
+    var new_modal_confirm = new modal_confirm(options);
+    new_modal_confirm.show();
+}
+
 /***/ })
-/******/ ]);
+
+/******/ });
