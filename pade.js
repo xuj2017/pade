@@ -6,6 +6,24 @@ global.appdir = __dirname;
 console.log('global.workdir:' + global.workdir)
 console.log('global.appdir:' + global.appdir)
 
+// function createNewPage(a,b){
+//     return new Promise( (resolve,reject)=>{
+//       console.log(11111)
+//       if(a == 1){
+//         resolve('qweqweqw')
+//       }else{
+//           reject('asdasdad');
+//       }
+//     })
+//   }
+
+//   createNewPage(2).then( res=>{
+//       console.log(res)
+//   }).catch( error=>{
+//     console.log(error,111)
+//   })
+// console.log(123123)
+// return;
 var app = require('./src/common/app');
 var files = require('./src/common/files');
 

@@ -37,6 +37,61 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="create_page_template">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="modal-title">新建页面</h6>
+            </div>
+            <form action="" id="create_page_form">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="control-label" for="page_name">页面名称
+                            <span class="required">*</span>
+                            <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="只能使用英文数字和下划线减号做文件名"></span>
+                        </label>
+                        <input class="form-control" id="page_name" type="text" pattern="[A-z0-9_-]+" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="page_layout">选择布局页 (Layout)</label>
+                        <select name="" id="page_layout" class="form-control select select-primary" data-toggle="select">
+                            {{#each layoutPage}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/each}}
+                            <option value="">不使用布局页</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="control_check_div">
+                            <label class="checkbox">
+                                <input type="checkbox" class="flat_checkbox custom-checkbox" id="extra_js">
+                                <span class="icons">
+                                    <span class="icon-unchecked"></span>
+                                    <span class="icon-checked"></span>
+                                </span> 创建与页面同名的JS</label>
+                            <label class="checkbox">
+                                <input type="checkbox" class="flat_checkbox custom-checkbox" id="extra_less">
+                                <span class="icons">
+                                    <span class="icon-unchecked"></span>
+                                    <span class="icon-checked"></span>
+                                </span> 创建与页面同名的Less</label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary submitbtn">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="pageblock">
     <h5>布局页列表(page/_layout)
         <a href="javascript:;" id="create_layout_btn" class="btn btn-inverse btn-sm">
@@ -75,6 +130,31 @@
     </div>
 </div>
 
+<div class="modal fade" id="create_layout_template">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h6 class="modal-title">新建布局页</h6>
+        </div>
+        <form action="" id="create_layout_form">
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label class="control-label" for="layout_name">布局页文件名 <span class="required">*</span> <span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" data-placement="right" data-original-title="只能使用英文数字和下划线减号做文件名"></span></label>
+              <input class="form-control" id="layout_name" type="text" pattern="[A-z0-9_-]+" required>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary submitbtn">确定</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 <div class="pageblock">
     <h5>局部页列表(page/_partial)
         <a href="javascript:;" id="create_partial_btn" class="btn btn-inverse btn-sm">
@@ -112,35 +192,19 @@
         </table>
     </div>
 </div>
-{{!-- <div id="create_page_template"> --}}
-    <div class="modal fade" id="create_page_template">
+<div class="modal fade" id="create_partial_template">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h6 class="modal-title">新建页面</h6>
+          <h4 class="modal-title">新建局部页</h4>
         </div>
-        <form action="" id="create_page_form">
+        <form action="" id="create_partial_form">
           <div class="modal-body">
 
             <div class="form-group">
-              <label class="control-label" for="page_name">页面名称 <span class="required">*</span> <span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" data-placement="right" data-original-title="只能使用英文数字和下划线减号做文件名"></span></label>
-              <input class="form-control" id="page_name" type="text" pattern="[A-z0-9_-]+" required>
-            </div>
-            <div class="form-group">
-              <label class="control-label" for="page_layout">选择布局页 (Layout)</label>
-              <select name="" id="page_layout" class="form-control select select-primary" data-toggle="select">
-                {{#each layoutPage}}
-                <option value="{{name}}">{{name}}</option>
-                {{/each}}
-                <option value="">不使用布局页</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <div class="control_check_div">
-                <label class="checkbox"><input type="checkbox" class="flat_checkbox" id="extra_js"> 创建与页面同名的JS</label>
-                <label class="checkbox"><input type="checkbox" class="flat_checkbox" id="extra_less"> 创建与页面同名的Less</label>
-              </div>
+              <label class="control-label" for="partial_name">局部页文件名 <span class="required">*</span> <span class="glyphicon glyphicon-info-sign"  data-toggle="tooltip" data-placement="right" data-original-title="只能使用英文数字和下划线减号做文件名"></span></label>
+              <input class="form-control" id="partial_name" type="text" pattern="[A-z0-9_-]+" required>
             </div>
 
           </div>
@@ -152,15 +216,8 @@
       </div>
     </div>
   </div>
-{{!-- </div> --}}
 
 
-{{#extend "bodybottom"}}
-   {{!-- var arr =  {{JSON.stringify(layoutObj)}} --}}
-<script>    
-    var layoutArr = '{{varable layoutPage}}';
-</script>
-
-<script src="/js/page.js"></script> 
-
-{{/extend}}
+{{#extend "bodybottom"}} 
+    <script src="/js/page.js"></script>
+ {{/extend}}
