@@ -18,5 +18,13 @@ module.exports = {
         }
         filedata = _.extend(filedata,data)
         jsonfile.writeFileSync(datafile_path,filedata,{spaces:2})
+    },
+    get(filepath){
+        let datafile_path = this.getDataPath(filepath);
+        if(exists(datafile_path)){
+            return jsonfile.readFileSync(datafile_path)
+        }else{
+            return {};
+        }
     }
 }

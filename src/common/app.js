@@ -126,6 +126,13 @@ hbs.registerHelper('showFileSize', function (size) {
   return out + ' ' + hz;
 });
 
+hbs.registerHelper('tslink', function (path) {
+  if (path.substring(path.length - 3) == '.ts') {
+    return path.substring(0, path.length - 2) + 'js'
+  }
+  return path
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

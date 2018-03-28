@@ -63,125 +63,115 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports) {
 
-class modal_confirm{
+class modal_alert{
     constructor(options){
-        this.option = $.extend({
-            title: '提示',
-            content: '',
-            onCancel: null,
-            onConfirm: null
-        }.options);
+        if(typeof options == 'string'){
+            options={
+                content:options
+            }
+        }
+        this.options = options;
     }
     show(){
-        var html = $('<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">' + this.options.title + '</h4></div><div class="modal-body"><p>' + this.options.content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">取消</button> <button type="button" class="btn btn-primary">确定</button></div></div></div></div>');
-        $("body").append(html);
+        var html =$('<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">提示</h4></div><div class="modal-body"><p>' + this.options.content + '</p></div><div class="modal-footer"><button type="button" class="btn btn-primary">确定</button></div></div></div></div>');
+        $('body').append(html);
+
         html.modal('show');
 
         html.on('click', '.btn-primary', function(){
             html.modal('hide');
-            if(this.options.onConfirm){
-                this.options.onConfirm();
-            }
-        }.bind(this));
-
+        });
+        
+        //模态框消失的时候
         html.on('hidden.bs.modal', function (e) {
             html.remove();
-            if(this.options.onCancel){
-                this.options.onCancel();
+            if(this.options.onClose){
+                this.options.onClose();
             }
         }.bind(this));
     }
 }
 
-module.exports = options =>{
-    var new_modal_confirm = new modal_confirm(options);
-    new_modal_confirm.show();
-}
+module.exports = function(options){
+    var new_modal_alert = new modal_alert(options);
+    new_modal_alert.show();
+};
 
 /***/ }),
-/* 2 */,
-/* 3 */
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
-var modal_confirm = __webpack_require__(1);
+var modal_alert = __webpack_require__(0);
 
-$(function () {
-    setTimeout(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    }, 500);
+$('#create_css_btn').click(function(){
+    $("#create_css_template").modal('show');
 
-});
+    $('#create_css_form').on('submit', function (e) {
+        e.preventDefault();
+        create_css('#css_name',false,function () {
+            $('#create_css_template').modal('hide');
+            location.reload();
+        }, function (message) {
+          modal_alert(message);
+        });
+        return false;
+      });  
+})
 
-$.ajaxSetup({
-    cache: false
-});
+$('#create_partial_css_btn').click(function(){
+    $("#create_partial_css_template").modal('show');
 
+    $('#create_partial_css_form').on('submit', function (e) {
+        e.preventDefault();
+        create_css('#partial_css_name',true,function () {
+            $('#create_partial_css_template').modal('hide');
+            location.reload();
+        }, function (message) {
+          modal_alert(message);
+        });
+        return false;
+      });  
+})
 
-$('[data-toggle="checkbox"]').radiocheck();
-$('[data-toggle="radio"]').radiocheck();
-$('[data-toggle="switch"]').bootstrapSwitch();
+function create_css(id,is_parial,success,fail){
+    console.log(id)
+    var css_name = $.trim($(id).val());
 
-
-function fillzero(num) {
-    if (num < 10) {
-        return '0' + num;
+    if(css_name == 'libs'){
+        modal_alert('不要建立名为libs的js和css文件')
+        return false;
     }
-    return num.toString();
+
+    $.ajax({
+        url:'/page/create_css',
+        type:'POST',
+        dataType:'json',
+        data:{
+            css_name,
+            is_parial:is_parial
+        }
+    })
+    .done(function(json){
+        console.log(json)
+        if(json.re){
+            success&& success();
+        }
+    })
+    .fail(function(error){
+        fail&&fail();
+    })
+
 }
 
-Handlebars.registerHelper('showTime', function (date) {
-    var thisdate = new Date(date);
-    return thisdate.getFullYear() + '/' + (thisdate.getMonth() + 1) + '/' + thisdate.getDate() + ' ' + thisdate.getHours() + ':' + fillzero(thisdate.getMinutes());
-    //return new Date(date).toLocaleString();
-});
-
-Handlebars.registerHelper('tslink', function (path) {
-    if (path.substring(path.length - 3) == '.ts') {
-        return path.substring(0, path.length - 2) + 'js'
-    }
-    return path
-});
-
-Handlebars.registerHelper('showFileSize', function (size) {
-    var size = parseInt(size);
-    var out = size;
-    var hz = '';
-    if (size > 1024 * 1024) {
-      out = size / (1024 * 1024);
-      hz = 'MB';
-    }
-    else if(size > 1024){
-      out = size / 1024;
-      hz = 'KB';    
-    }
-    else{
-      hz = 'B';    
-    }
-    
-    if(size > 1024){
-      if(out >= 100){
-        out = out.toFixed(0);
-      }
-      else if(out >= 10){
-        out = out.toFixed(1);
-      }
-      else{
-        out = out.toFixed(2);
-      }    
-    }
-  
-  
-    return out + ' ' + hz;
-  });
-  
-
 /***/ })
-/******/ ]);
+
+/******/ });

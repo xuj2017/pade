@@ -5,6 +5,7 @@ const mkdir = require('mkdirp');
 const path = require('path');
 const glob = require('glob');
 const page_data = require('./page_data');
+const log = require('./log');
 
 let files = {
     /**
@@ -25,15 +26,16 @@ let files = {
      */
     writeFileSync(filepath, content, options) {
         this.createDirectory(filepath);
-        console.log('lalala')
+        // console.log('lalala')
         fs.writeFileSync(filepath, content, options);
+        log(`创建文件${filepath}成功`,'green')
     },
     /**
      * 创建目录
      * @param {any} filepath 
      */
     createDirectory(filepath) {
-        console.log('目录')
+        // console.log('目录')
         var dir = path.dirname(filepath);
         if (exists(dir)) return
         mkdir.sync(dir);

@@ -4,7 +4,7 @@ const file = require('../common/files');
 const jsonresult = require('../lib/jsonresult');
 const path = require('path');
 
-
+//hbs页面
 router.get('/', function(req, res, next) {
   var basePage = file.getFileInfo('page/**/*.hbs',{
     ignore:'page/+(_layout|_partial)/*.hbs'
@@ -25,6 +25,48 @@ router.get('/', function(req, res, next) {
   })
 
 });
+
+//js页面
+router.get('/js', function(req, res, next) {
+ file.getFileInfo('js/*.js',{
+    ignore:'js/modules/*.js'
+  }).then( result =>{
+    res.render('pageJs',{
+      title:'js列表',
+      config:global.config,
+      jsPage:result
+    })
+  }).catch( error=>{
+  })
+
+});
+
+//css页面
+router.get('/css', function(req, res, next) {
+  var cssBasePage = file.getFileInfo('css/*.less');
+  var cssPartialPage = file.getFileInfo('css/_partial/*.less');
+
+  Promise.all([cssBasePage,cssPartialPage]).then(result =>{
+    res.render('pageCss',{
+      title:'css列表',
+      config:global.config,
+      cssBasePage:result[0],
+      cssPartialPage:result[1]
+    })
+  })
+
+  // file.getFileInfo('css/*.less',{
+  //    ignore:'css/+(_partial|_sprite)/*.less'
+  //  }).then( result =>{
+  //    res.render('pageCss',{
+  //      title:'css列表',
+  //      config:global.config,
+  //      cssPage:result
+  //    })
+  //  }).catch( error=>{
+  //  })
+ 
+ });
 
 //创建普通页面
 router.post('/create_page',function(req,res,next){
@@ -70,5 +112,37 @@ router.post('/create_partial',function(req,res,next){
   }
   res.json(resultjson);
 })
+
+//创建js页
+router.post('/create_js',function(req,res,next){
+  var js_name= req.body.js_name;
+  let resultjson = new jsonresult(true, '', null)
+  try {
+    file.writeFileSync(path.join('js',js_name+'.js'),`//${js_name}`,'utf-8')
+  } catch (error) {
+    resultjson.re = false;
+    resultjson.message = error.message;
+  }
+  res.json(resultjson);
+})
+
+//创建css页
+router.post('/create_css',function(req,res,next){
+  var css_name= req.body.css_name;
+  var cssPath = '';
+  if(req.body.is_parial == 'true'){
+    cssPath = '_partial'
+  }
+  let resultjson = new jsonresult(true, '', null)
+  try {
+    file.writeFileSync(path.join('css',cssPath,css_name+'.less'),`//${css_name}`,'utf-8')
+  } catch (error) {
+    resultjson.re = false;
+    resultjson.message = error.message;
+  }
+  res.json(resultjson);
+})
+
+
 
 module.exports = router;
