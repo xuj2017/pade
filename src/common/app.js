@@ -94,6 +94,10 @@ hbs.registerHelper('varable',function(data){
   return JSON.stringify(data).toString();
 })
 
+hbs.registerHelper('extname',function(data){
+  return path.extname(data);
+})
+
 hbs.registerHelper('showFileSize', function (size) {
   var size = parseInt(size);
   var out = size;

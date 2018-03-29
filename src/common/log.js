@@ -13,7 +13,7 @@ module.exports = function(text,color){
         if(!isShow){
             return false
         }
-
+        var color = color || 'green';
         if(color != undefined){
             console.log(`[${moment().format("YYYY-MM-DD HH:mm:ss:SSS")}] ${colors[color](text)}`)
         }else{

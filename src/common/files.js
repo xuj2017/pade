@@ -124,6 +124,40 @@ let files = {
                 reject();
             }
         })
+    },
+    /**
+     * glob相对路径转换为node相对路径
+     * 
+     * @param {any} pathstr 
+     * @returns 
+     */
+    globPathToNodePath(pathstr){
+        if(pathstr.indexOf('./') != 0 && pathstr.indexOf(':')<0){
+            pathstr ='./'+pathstr;
+        }
+        return pathstr
+    },
+    /**
+     * 获取文件信息
+     * @param {any} globpath 
+     * @param {any} options 
+     */
+    getFileBaseInfoSync(globpath,options){
+        return glob.sync(globpath,options).map(v =>{
+            return {
+                name:path.basename(v,path.extname(v)),
+                filename:path.basename(v),
+                path:this.globPathToNodePath(v)
+            }
+        })
+    },
+    /**
+     * 获取js文件信息
+     * 
+     * @returns 
+     */
+    getPageJs(){
+        return this.getFileBaseInfoSync('js/*.{js,jsx,ts,tsx}',{})
     }
 }
 
