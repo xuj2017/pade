@@ -28,7 +28,7 @@ let files = {
         this.createDirectory(filepath);
         // console.log('lalala')
         fs.writeFileSync(filepath, content, options);
-        log(`创建文件${filepath}成功`,'green')
+        log(`创建文件${filepath}成功`, 'green')
     },
     /**
      * 创建目录
@@ -105,7 +105,7 @@ let files = {
      */
     createNewPage(name, options) {
         var _self = this;
-       return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             try {
                 _self.createFileByTemplate('new_page', path.join(global.workdir, 'page', name + '.hbs'), options);
                 if (options.extra_js) {
@@ -131,9 +131,9 @@ let files = {
      * @param {any} pathstr 
      * @returns 
      */
-    globPathToNodePath(pathstr){
-        if(pathstr.indexOf('./') != 0 && pathstr.indexOf(':')<0){
-            pathstr ='./'+pathstr;
+    globPathToNodePath(pathstr) {
+        if (pathstr.indexOf('./') != 0 && pathstr.indexOf(':') < 0) {
+            pathstr = './' + pathstr;
         }
         return pathstr
     },
@@ -142,13 +142,34 @@ let files = {
      * @param {any} globpath 
      * @param {any} options 
      */
-    getFileBaseInfoSync(globpath,options){
-        return glob.sync(globpath,options).map(v =>{
+    getFileBaseInfoSync(globpath, options) {
+        return glob.sync(globpath, options).map(v => {
             return {
-                name:path.basename(v,path.extname(v)),
-                filename:path.basename(v),
-                path:this.globPathToNodePath(v)
+                name: path.basename(v, path.extname(v)),
+                filename: path.basename(v),
+                path: this.globPathToNodePath(v)
             }
+        })
+    },
+    /**
+     * 复制文件
+     * @param {any} source 
+     * @param {any} target 
+     */
+    copyFile(source, target) {
+        console.log(source, target);
+        new Promise((resolve, reject) => {
+            let readStream = fs.createReadStream(source);
+            this.createDirectory(target);
+
+            readStream.once('error', (err) => {
+                reject(error)
+            })
+
+            readStream.once('end', () => {
+                resolve()
+            })
+            readStream.pipe(fs.createWriteStream(target));
         })
     },
     /**
@@ -156,8 +177,26 @@ let files = {
      * 
      * @returns 
      */
-    getPageJs(){
-        return this.getFileBaseInfoSync('js/*.{js,jsx,ts,tsx}',{})
+    getPageJs() {
+        return this.getFileBaseInfoSync('js/*.{js,jsx,ts,tsx}', {})
+    },
+    /**
+     * 获取css文件信息
+     * 
+     * @returns 
+     */
+    getPageLess() {
+        return this.getFileBaseInfoSync('css/&.{css,less,scss}', {})
+    },
+    /**
+     * 获取页面信息
+     * 
+     * @returns 
+     */
+    getPageHbs() {
+        return this.getFileBaseInfoSync('page/**/*.hbs', {
+            ignore: 'page/+(_layout|_partial)/*.hbs'
+        })
     }
 }
 

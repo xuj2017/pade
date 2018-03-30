@@ -25,25 +25,25 @@ module.exports = {
         let webpackconfig_entry = {};
         pageJs.forEach(v => {
             if (v.path.indexOf('./') != 0) {
-              v.path = './' + v.path
+                v.path = './' + v.path
             }
             webpackconfig_entry[v.name] = v.path;
-          });
+        });
         // console.log(webpackconfig_entry,111111)
         return new Promise((resolve, reject) => {
             let webpack_config = {
                 resolve: {
                     modules: [
-                      path.join(global.workdir, 'js', 'modules')
+                        path.join(global.workdir, 'js', 'modules')
                     ],
                     extensions: ['.ts', '.tsx', '.js', '.jsx']
-                  },
+                },
                 entry: webpackconfig_entry,
                 output: {
                     path: path.join(global.workdir, 'bundle', 'js'),
                     //publicPath: '/js',
                     filename: '[name].js'
-                  },
+                },
                 resolveLoader: {
                     alias: {
                         "style-loader": path.join(global.appdir, 'node_modules', 'style-loader'),
@@ -105,6 +105,18 @@ module.exports = {
                                     configFileName: 'feide.config.json'
                                 }
                             }]
+                        },
+                        {
+                            test: /\.js$/,
+                            exclude: /(node_modules|bower_components)/,
+                            use: {
+                                loader: 'babel-loader',
+                                options: {
+                                    presets: ['env'],
+                                    //sourceRoot: global.appdir
+                                    filename: path.join(global.appdir, 'js')
+                                }
+                            }
                         }
                     ]
                 },
