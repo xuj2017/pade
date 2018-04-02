@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -111,78 +111,95 @@ module.exports = function(options){
 
 /***/ }),
 
-/***/ 10:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
-var modal_alert = __webpack_require__(0)
-$('#create_publish_btn').click(function () {
-    $('#create_publish_template').modal('show');
-    $('#create_publish_form').on('submit', function (e) {
-        e.preventDefault();
-        create_publish(function () {
-            $('#create_publish_template').modal('hide');
-            location.reload()
-        }, function (message) {
-            modal_alert(message.toString());
-        })
-    })
-})
+const model_alert = __webpack_require__(0);
 
-function create_publish(success, fail) {
-    var publish_name = $.trim($('#publish_name').val());
-    var publish_folder = $.trim($('#publish_folder').val());
-    var publish_page = $('#publish_page').is(':checked');
-    var publish_compress = $('#publish_compress').is(':checked');
-    $.ajax({
-            url: '/publish/create_publish',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                publish_name,
-                publish_folder,
-                publish_page,
-                publish_compress
-            }
+
+var proxy = {
+    getRuleHtml() {
+        return Handlebars.compile($("#create_proxy_rule_template").html())({});
+    },
+    add() {
+        $('#proxy_rules').append(this.getRuleHtml());
+    },
+    bind() {
+        var _self = this;
+        $('#add_proxy_rule').click(function () {
+            _self.add()
         })
-        .done(function (json) {
-            if (json.re) {
-                if (success) {
-                    success && success();
-                }
+        $('#proxy_rules').on('click', '.rule_moveup', function () {
+            var thisrule = $(this).parents('.proxy_rules_item');
+            var thisindex = thisrule.index();
+            if (thisindex != 0) {
+                $('.proxy_rules_item').eq(thisindex - 1).before(thisrule);
+            }
+        });
+
+        $('#proxy_rules').on('click', '.rule_movedown', function () {
+            var thisrule = $(this).parents('.proxy_rules_item');
+            var thisindex = thisrule.index();
+            if (thisindex != ($('.proxy_rules_item').length - 1)) {
+                $('.proxy_rules_item').eq(thisindex + 1).after(thisrule);
+            }
+        });
+
+        $('#proxy_rules').on('click', '.delete_rule', function () {
+            if ($('.proxy_rules_item').length > 1) {
+                $(this).parents('.proxy_rules_item').remove();
             } else {
-                if (fail) {
-                    fail && fail(json.message);
+                modal_alert({
+                    content: '最后一条规则不能删除！'
+                });
+            }
+
+        });
+
+        $('#save_proxy').click(function () {
+            let portnum = $('#portnum').val();
+            var rules = [];
+
+            $('.proxy_rules_item').each(function (i, v) {
+                rules.push({
+                    route: $('.porxy_route', $(v)).val(),
+                    url: $('.porxy_url', $(v)).val()
+                });
+            });
+            
+            console.log(portnum)
+
+            $.ajax({
+                url: '/proxy/save',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                  rules: JSON.stringify(rules),
+                  portnum: portnum
                 }
-            }
+              })
+              .done(function (json) {
+                if (json.re) {
+                  $('#save_proxy_tips').show();
+                  setTimeout(function () {
+                    $('#save_proxy_tips').hide();
+                  }, 3000);
+                }
+              })
+              .fail(function (error) {
+                model_alert(error.message)
+              })
+              
+            return false;
         })
-        .fail(function (error) {
-            if (fail) {
-                fail && fail(error.message);
-            }
-        })
+    },
+    init() {
+        this.add();
+        this.bind();
+    }
 }
-$('.publish_publish_btn').click(function () {
-    var index = $(this).data('index');
-    // console.log(index)
-    $.ajax({
-            url: '/publish/publish',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                index
-            },
-        })
-        .done((json) => {
-            if (json.re) {
-                modal_alert('发布成功！');
-            } else {
-                modal_alert('发布失败！' + json.message);
-            }
-        })
-        .fail(function (error) {
-            modal_alert(error.message);
-        })
-})
+
+proxy.init();
 
 /***/ })
 

@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     save(json){
-        jsonfile.writeFileSync(path.join(global.workdir,'pade.config.json'),json,{space:2});
+        jsonfile.writeFileSync(path.join(global.workdir,'pade.config.json'),json,{spaces: 2});
     },
     get(){
         return jsonfile.readFileSync(path.join(global.workdir,'pade.config.json'));

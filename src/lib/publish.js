@@ -13,15 +13,15 @@ const pahbs = require('./pahbs')
 
 module.exports = {
     publish(config) {
-        new Promise((resolve, reject) => {
+      return  new Promise((resolve, reject) => {
             let publish_promise_list = [
-                // this.publishJs(config),
-                this.publishLibsJs(config),
-                // this.publishCss(config),
-                this.publishLibsCss(config),
-                this.publishSprite(config),
-                // this.publishPublicFile(config),
-                this.publishModuleFile(config)
+                this.publishJs(config),
+                this.publishCss(config),
+                // this.publishLibsJs(config),
+                // this.publishLibsCss(config),
+                // this.publishSprite(config),
+                this.publishPublicFile(config),
+                // this.publishModuleFile(config)
             ]
 
             if (config.publish_page) {
@@ -76,7 +76,6 @@ module.exports = {
 
                 jss.forEach(v => {
                     let jscontent = pawebpack.readJS(v.name);
-
                     if (config.publish_compress) {
                         let uglifyjs_option = {
                             ie8: true,
@@ -118,7 +117,6 @@ module.exports = {
     publishCss(config){
         return new Promise( (resolve,reject)=>{
             let csss = files.getPageLess();
-
             mkdirp(path.join(config.publish_folder, 'css'), function (err) {
                 if (err) {
                   reject(err);
@@ -137,7 +135,6 @@ module.exports = {
                     let output = '';
                     if (config.publish_compress) {
                       output = (new CleanCSS(css_options).minify(v)).styles;
-                      //console.info(output);
                     }
                     else {
                       output = v
@@ -162,11 +159,10 @@ module.exports = {
     publishPublicFile(config){
         log('开始发布public文件夹');
         return new Promise( (resolve, reject)=>{
-            glob('public/**/*', function (error, public_files) {
+            glob('public/**/*.*', function (error, public_files) {
               if (error != undefined) {
                 reject(error)
               }
-              console.log(public_files)
               public_files.forEach(v => {
                 files.copyFile(v, path.join(config.publish_folder, v.substring(7)))
                 log('复制 ' + v + ' 成功', 'green')

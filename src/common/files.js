@@ -157,8 +157,8 @@ let files = {
      * @param {any} target 
      */
     copyFile(source, target) {
-        console.log(source, target);
-        new Promise((resolve, reject) => {
+        // console.log(source, target);
+       return new Promise((resolve, reject) => {
             let readStream = fs.createReadStream(source);
             this.createDirectory(target);
 
@@ -186,7 +186,7 @@ let files = {
      * @returns 
      */
     getPageLess() {
-        return this.getFileBaseInfoSync('css/&.{css,less,scss}', {})
+        return this.getFileBaseInfoSync('css/*.{css,less,scss}', {})
     },
     /**
      * 获取页面信息
