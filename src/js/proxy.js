@@ -78,9 +78,76 @@ var proxy = {
         })
     },
     init() {
-        this.add();
+        // this.add();
         this.bind();
     }
 }
 
 proxy.init();
+
+
+$('#open_proxy_form').on('submit', function (e) {
+    e.preventDefault();
+    
+    var portnum = $('#portnum').val();
+    var rules = [];
+    $('.proxy_rules_item').each(function (i, v) {
+      rules.push({
+        route: $('.porxy_route', $(v)).val(),
+        url: $('.porxy_url', $(v)).val()
+      });
+    });
+    // console.info(rules);
+    $.ajax({
+        url: '/proxy/open',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+          rules: JSON.stringify(rules),
+          portnum: portnum
+        }
+      })
+      .done(function (json) {
+        console.info(json);
+        if (json.re) {
+          $('#open_proxy').prop('disabled', true);
+          $('#close_proxy').prop('disabled', false);
+  
+          $('#portnum').add('.porxy_route').add('.porxy_url').add('.rule_moveup').add('.rule_movedown').add('.delete_rule').add('#add_proxy_rule').prop('disabled', true);
+        }
+      })
+      .fail(function (error) {
+  
+      })
+      .always(function () {
+  
+      });
+    return false;
+  });
+
+
+  $('#close_proxy').on('click', function () {
+    $.ajax({
+        url: '/proxy/close',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+  
+        }
+      })
+      .done(function (json) {
+        if (json.re) {
+          $('#open_proxy').prop('disabled', false);
+          $('#close_proxy').prop('disabled', true);
+  
+          $('#portnum').add('.porxy_route').add('.porxy_url').add('.rule_moveup').add('.rule_movedown').add('.delete_rule').add('#add_proxy_rule').prop('disabled', false);
+        }
+      })
+      .fail(function (error) {
+  
+      })
+      .always(function () {
+  
+      });
+  });
+  

@@ -4,7 +4,7 @@
     <div class="form-group">
         <div class="col-lg-4">
             <label class="control-label" for="portnum">代理服务端口号</label>
-            <input class="form-control" id="portnum" required type="number" max="65536" min="1" placeholder="代理服务端口号">
+            <input class="form-control" id="portnum" required type="number" max="65536" min="1" value="{{proxy_list.proxy_port}}" placeholder="代理服务端口号">
         </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div id="proxy_rules">
 
-        {{#each proxy_list}}
+        {{#each proxy_list.proxy_rules}}
         <div class="form-group proxy_rules_item">
             <div class="col-lg-4">
                 <label class="control-label">路由</label>
