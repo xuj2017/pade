@@ -1,5 +1,5 @@
 
- [![view on npm](http://img.shields.io/npm/v/pade.svg)](https://www.npmjs.org/package/pade)
+ <!-- [![view on npm](http://img.shields.io/npm/v/pade.svg)](https://www.npmjs.org/package/pade) -->
 <!-- [![npm module downloads per month](http://img.shields.io/npm/dm/pade.svg)](https://www.npmjs.org/package/pade)  -->
 
 pade
