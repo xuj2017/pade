@@ -197,6 +197,40 @@ let files = {
         return this.getFileBaseInfoSync('page/**/*.hbs', {
             ignore: 'page/+(_layout|_partial)/*.hbs'
         })
+    },
+    /**
+     * 获取libs js文件信息
+     */
+    getLibsJs(){
+        return this.getFileBaseInfoSync('libs/**/*.js',{})
+    },
+    /**
+     * 获取libs css文件信息
+     */
+    getLibsCss(){
+        return this.getFileBaseInfoSync('libs/**/*.css',{})
+    },
+    /**
+     * 获取libs文件内容
+     */
+    getLibsContent(type){
+        let pageList;
+        if(type === 'js'){
+            pageList = this.getLibsJs();
+        }else if(type === 'css'){
+            pageList = this.getLibsCss();
+        }else{
+            return ''
+        }
+        let result = [];
+
+        pageList.sort()
+
+        pageList.forEach(function (v) {
+            result.push(fs.readFileSync(v.path, 'utf-8'));
+        });      
+        
+        return result.join('\n');
     }
 }
 

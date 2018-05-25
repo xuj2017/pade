@@ -67,4 +67,15 @@ router.get('/:pagename([a-zA-z0-9_-]+)', function (req, res, next) {
         }
       }
   })
+
+  router.get('/js/libs.js',(req,res,next)=>{
+    res.setHeader("Content-Type","application/x-javascript");
+    res.send(file.getLibsContent('js'))
+  })
+
+  router.get('/css/libs.css',(req,res,next)=>{
+    res.send(file.getLibsContent('css'))
+  })
+
+
 module.exports = router
