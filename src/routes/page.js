@@ -3,6 +3,7 @@ const router = express.Router();
 const file = require('../common/files');
 const jsonresult = require('../lib/jsonresult');
 const path = require('path');
+const page_data = require('../common/page_data');
 
 //hbs页面
 router.get('/', function(req, res, next) {
@@ -143,6 +144,29 @@ router.post('/create_css',function(req,res,next){
   res.json(resultjson);
 })
 
+ /**
+   * 获取页面数据
+   */
+  router.get('/get_page_data',(req,res,next)=>{
+    let pagePath= req.query.pagePath;
+    let resultjson = new jsonresult(true,'',page_data.get(pagePath));
+    res.json(resultjson);
+  })
 
+//保存页面数据
+router.post('/save_page_data',(req,res,next)=>{
+  console.log(123)
+  let pageData = JSON.parse(req.body.pageData);
+  console.log(pageData)
+  let pagePath = req.bodu.pagePath;
+
+  try {
+    page_data.save(pagePath,pageData);
+    let resultjson = new jsonresult(true,'',null)
+  } catch (error) {
+    let resultjson = new jsonresult(false,error.message,null)    
+  }
+  res.json(resultjson);
+})
 
 module.exports = router;

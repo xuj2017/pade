@@ -27,7 +27,6 @@ const pawebpack =require('./src/lib/pawebpack');
 pawebpack.start();
 
 app(global.config.server_port).then(function () {
-    console.log(1111111111)
     let opn = require('opn');
     opn('http://localhost:' + global.config.server_port + '/', {
         app: 'chrome'

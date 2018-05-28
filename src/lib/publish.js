@@ -17,8 +17,8 @@ module.exports = {
             let publish_promise_list = [
                 this.publishJs(config),
                 this.publishCss(config),
-                // this.publishLibsJs(config),
-                // this.publishLibsCss(config),
+                this.publishLibsJs(config),
+                this.publishLibsCss(config),
                 // this.publishSprite(config),
                 this.publishPublicFile(config),
                 // this.publishModuleFile(config)
@@ -197,8 +197,48 @@ module.exports = {
      * 
      * @returns 
      */
-    publishLibsJs(){
+    publishLibsJs(config){
         return new Promise( (resolve,reject)=>{
+            let jss = files.getLibsJs();
+            if(jss.length>0){
+                mkdirp(path.join(config.publish_folder,'js'),(error)=>{
+                    if(error){
+                        reject(error);
+                        return false;
+                    }
+                    let output = files.getLibsContent('js');
+
+                    if(config.publish_compress){
+                        let uglifyjs_option={
+                            ie8: true,
+                            sourceMap: {
+                                url: "libs.js.map",
+                                includeSources: true
+                            }
+                        }
+                    
+                        if(global.config.js_compress && global.config.js_compress.console){
+                            uglifyjs_option.compress = {};
+                            uglifyjs_option.compress.drop_console = true;
+                        }
+
+                        let uglifyjs_result = UglifyJS.minify(output,uglifyjs_option);
+                        if(uglifyjs_result.error !== undefined){
+                            reject(uglifyjs_result.error);
+                        }else{
+                            fs.writeFileSync(path.join(config.publish_folder,'js','libs.js'),uglifyjs_result.code,'utf-8');
+                            if(true){
+                                let mapFile = uglifyjs_result.map;
+                                mapFile = mapFile.replace('"sources":["0"]','"sources":["libs.js"]')
+                                fs.writeFileSync(path.join(config.publish_folder,'js','libs.js.map'),mapFile,'utf-8')
+                            }
+                        }
+                    }else{
+                        fs.writeFileSync(path.join(config.publish_folder,'js','libs.js'),output,'utf-8');
+                    }
+                    resolve();
+                })
+            }
             resolve();
         })
     },
@@ -206,8 +246,21 @@ module.exports = {
      * 发布libscss
      * 
      */
-    publishLibsCss(){
+    publishLibsCss(config){
         return new Promise( (resolve,reject)=>{
+            let csss = files.getLibsCss();
+            if(csss.length>0){
+                mkdirp(path.join(config.publish_folder,'css'),error=>{
+                    if(error){
+                        reject(error);
+                        return false;
+                    }
+
+                    let output = files.getLibsContent('css');
+                    fs.writeFileSync(path.join(config.publish_folder,'css','libs.css'),output,'utf-8')
+                    resolve();
+                })
+            }
             resolve();
         })
     },

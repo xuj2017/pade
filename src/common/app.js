@@ -29,8 +29,6 @@ glob.sync('./src/routes/*.js',{
   routes_list[filename] = require(path.join(global.appdir,'src','routes',filename))
 })
 
-console.log(routes_list)
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));

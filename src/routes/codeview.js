@@ -51,9 +51,7 @@ router.get('/',(req,res,next)=>{
 
 router.get('/raw',(req,res,next)=>{
     let filePath = req.query.path;
-    console.log(filePath)
     tools.readBigFile(filePath, content=>{
-        console.log(content)
         res.setHeader("Content-Type", 'text/plain; charset=utf-8');
         res.send(content);
     })

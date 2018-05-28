@@ -9,7 +9,6 @@ $('#create_js_btn').click(function(){
             $('#create_js_template').modal('hide');
             location.reload();
         }, function (message) {
-          console.info(message);
           modal_alert(message);
         });
         return false;

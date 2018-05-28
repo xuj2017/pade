@@ -17,7 +17,6 @@ module.exports = {
                     //console.info(output.map)
                     if (e != null) {
                         log('编译' + filepath + '失败', 'red')
-                        console.info(e);
                         reject(e);
                     } else {
                         log('编译' + filepath + '成功', 'green')

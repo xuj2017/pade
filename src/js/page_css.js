@@ -31,7 +31,6 @@ $('#create_partial_css_btn').click(function(){
 })
 
 function create_css(id,is_parial,success,fail){
-    console.log(id)
     var css_name = $.trim($(id).val());
 
     if(css_name == 'libs'){
@@ -49,7 +48,6 @@ function create_css(id,is_parial,success,fail){
         }
     })
     .done(function(json){
-        console.log(json)
         if(json.re){
             success&& success();
         }

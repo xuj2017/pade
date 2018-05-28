@@ -51,8 +51,6 @@ var proxy = {
                 });
             });
             
-            console.log(portnum)
-
             $.ajax({
                 url: '/proxy/save',
                 type: 'POST',

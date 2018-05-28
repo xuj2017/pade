@@ -20,7 +20,6 @@ $('#init_submit_btn').on('click',function(){
     var server_port = $('#server_port').val();
     var new_file = $('[name="new_file"]:checked').val();
 
-    console.log(1131123)
     $.ajax({
         url:'/init/init_project',
         type:'POST',
@@ -32,7 +31,6 @@ $('#init_submit_btn').on('click',function(){
         }
     })
     .done(function(json){
-        console.log(json)
         if(json.re){
             if(server_port == port){
                 modal_alert({
@@ -54,7 +52,6 @@ $('#init_submit_btn').on('click',function(){
         }
     })
     .fail(function(error){
-        console.log(error)
         modal_alert(error.message)
     })
 })

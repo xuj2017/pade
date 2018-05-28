@@ -1,6 +1,5 @@
 class modal_alert{
     constructor(options){
-        console.log(options)
         if(options == undefined){
             options = '发生位置错误'
         }
