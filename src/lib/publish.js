@@ -21,7 +21,7 @@ module.exports = {
                 this.publishLibsCss(config),
                 // this.publishSprite(config),
                 this.publishPublicFile(config),
-                // this.publishModuleFile(config)
+                this.publishModuleFile(config)
             ]
 
             if (config.publish_page) {
@@ -190,7 +190,7 @@ module.exports = {
                 })
               }
             })
-          })
+        })
     },
     /**
      * 发布libsjs

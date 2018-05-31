@@ -155,16 +155,14 @@ router.post('/create_css',function(req,res,next){
 
 //保存页面数据
 router.post('/save_page_data',(req,res,next)=>{
-  console.log(123)
   let pageData = JSON.parse(req.body.pageData);
-  console.log(pageData)
-  let pagePath = req.bodu.pagePath;
-
+  let filePath = req.body.filePath;
+  let resultjson;
   try {
-    page_data.save(pagePath,pageData);
-    let resultjson = new jsonresult(true,'',null)
+    page_data.save(filePath,pageData);
+    resultjson = new jsonresult(true,'',null)
   } catch (error) {
-    let resultjson = new jsonresult(false,error.message,null)    
+    resultjson = new jsonresult(false,error.message,null)    
   }
   res.json(resultjson);
 })

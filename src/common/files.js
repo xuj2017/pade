@@ -231,6 +231,22 @@ let files = {
         });      
         
         return result.join('\n');
+    },
+    /**
+     * 获取模块列表
+     */
+    getModules(){
+        return new Promise((resolve,reject)=>{
+            const paModule = require('../lib/paModules');
+            this.getFileBaseInfo('js/modules/*/',{}).then(modules=>{
+                modules.forEach(v=>{
+                    v.json = paModule.getModulePackageJson(v.name);
+                })
+                resolve(modules)
+            }).catch(error=>{
+                reject(error)
+            })
+        })
     }
 }
 

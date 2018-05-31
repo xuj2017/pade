@@ -1,0 +1,113 @@
+<h3>模块</h3>
+
+<div class="pageblock">
+    <div>
+        <a href="#" id="create_module_btn" class="btn btn-inverse">
+            <span class="fui-plus"></span> 新建模块</a>
+    </div>
+    <h5>模块列表(js/modules) </h5>
+    <div id="moduleList">
+        <div class="module_list row">
+            {{#each modules}}
+            <div class="col-md-4">
+                <div class="panel panel-primary" data-moduleName="{{filename}}">
+                    <div class="panel-heading">
+                        <div class="panel-title">{{filename}}</div>
+                        {{!--
+                        <div class="panel-rifun">
+                            <span class="funicon fui-upload upload_module_btn" data-path="{{path}}" data-toggle="tooltip" data-placement="top" data-original-title="发布模块"></span>
+                            <span class="funicon fui-new edit_module_json" data-modulename="{{filename}}" data-toggle="tooltip" data-placement="top"
+                                data-original-title="编辑模块信息(package.json)"></span>
+                        </div> --}}
+                    </div>
+                    <div class="panel-body" title="{{json.description}}">
+                        {{json.description}}&nbsp;
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+{{!--
+<div class="modal fade" id="create_module_template">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="modal-title">新建模块</h6>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="module_name">模块名称
+                    <span class="required">*</span>
+                    <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="只能使用小写英文,数字,下划线,减号做模块名称"></span>
+                </label>
+                <input class="form-control" id="module_name" type="text" pattern="[a-z0-9_-]+" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="module_description">模块描述</label>
+                <input class="form-control" id="module_description" type="text">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="module_template">初始化代码</label>
+                <select class="form-control" id="module_template">
+                    <option value="none">无</option>
+                    <option value="function">Function</option>
+                    <option value="object">Object</option>
+                    <option value="lclass">Function prototype</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    <input id="create_md" class="midcheck" type="checkbox"> 新建 README.md 文件</label>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+<div class="modal fade" id="create_module_template">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">新建模块</h4>
+            </div>
+            <form action="" id="create_module_form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="module_name">模块名称
+                            <span class="required">*</span>
+                            <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="只能使用小写英文,数字,下划线,减号做模块名称"></span>
+                        </label>
+                        <input class="form-control" id="module_name" type="text" pattern="[a-z0-9_-]+" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="module_description">模块描述</label>
+                        <input class="form-control" id="module_description" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="module_template">初始化代码</label>
+                        <select class="form-control" id="module_template">
+                            <option value="none">无</option>
+                            <option value="function">Function</option>
+                            <option value="object">Object</option>
+                            <option value="lclass">Function prototype</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">
+                            <input id="create_md" class="midcheck" type="checkbox"> 新建 README.md 文件</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#extend "bodybottom"}}
+<script src="/js/page_module.js"></script> {{/extend}}
