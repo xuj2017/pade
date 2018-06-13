@@ -140,6 +140,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(global.appdir, 'public')));
+app.use('/spritesImg',express.static(path.join(global.workdir, 'css', '_sprite')));
 
 for(let v in routes_list){
   if(v == 'index') app.use('/',routes_list[v])

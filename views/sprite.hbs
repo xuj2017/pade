@@ -1,0 +1,36 @@
+{{#extend "head"}}
+    <link rel="stylesheet" href="/css/highlight/default.css">
+    <link rel="stylesheet" href="/css/highlight/vs.css"> 
+{{/extend}}
+
+<h3>css/_sprite</h3>
+
+<h3>sprite 图片列表</h3>
+
+<div id="sprites_list">
+    <div class="row">
+    {{#each spriteList}}
+        <div class="col-md-2">
+            <img src="/spritesImg/{{this.filename}}" alt=""> {{this.filename}}
+            <input type="text" class="code icon_code" value="&lt;i class=&quot;icon icon_{{this.name}}&quot;>&lt;/i>">
+        </div>
+    {{/each}}
+    </div>
+</div>
+
+<h3>合并图</h3>
+<p><img src="/preview/css/img/sprites.png" alt="" id="sprite_img"></p>
+
+<div id="sprite_less">
+  <h3>Less文件(./css/_partial/_sprite.less)</h3>
+  <p>
+    <pre><code class="Less" id="csspre">
+        {{spriteCSS}}
+    </code></pre>
+  </p>
+</div>
+
+{{#extend "bodybottom"}}
+<script src="/js/highlight.pack.js"></script>
+<script src="/js/sprites.js"></script>
+{{/extend}}

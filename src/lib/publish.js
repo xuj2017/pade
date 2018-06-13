@@ -9,7 +9,8 @@ const CleanCSS = require('clean-css');
 const glob = require('glob');
 const mfs = require('./memoryfs');
 const path = require('path');
-const pahbs = require('./pahbs')
+const pahbs = require('./pahbs');
+const memory_file = require('./memory_file')
 
 module.exports = {
     publish(config) {
@@ -19,7 +20,7 @@ module.exports = {
                 this.publishCss(config),
                 this.publishLibsJs(config),
                 this.publishLibsCss(config),
-                // this.publishSprite(config),
+                this.publishSprite(config),
                 this.publishPublicFile(config),
                 this.publishModuleFile(config)
             ]
@@ -267,9 +268,14 @@ module.exports = {
     /**
      * 发布雪碧图
      */
-    publishSprite(){
+    publishSprite(config){
         return new Promise( (resolve,reject)=>{
-            resolve();
+            if(memory_file.sprite_img == undefined){
+                resolve();
+                return false;
+            }
+            files.writeFileSync(path.join(config.publish_folder, 'css', 'img', 'sprites.png'), memory_file.sprite_img);
+            resolve()
         })
     }
     

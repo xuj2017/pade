@@ -4,6 +4,7 @@ const file = require('../common/files');
 const pahbs = require('../lib/pahbs');
 const pawebpack = require('../lib/pawebpack');
 const file_make = require('../lib/file_make');
+const memory_file =require('../lib/memory_file');
 
 router.get('/:pagename([a-zA-z0-9_-]+)', function (req, res, next) {
     let pagename = req.params.pagename;
@@ -77,5 +78,11 @@ router.get('/:pagename([a-zA-z0-9_-]+)', function (req, res, next) {
     res.send(file.getLibsContent('css'))
   })
 
+  router.get('/css/img/sprites.png',(req,res,next)=>{
+    if(memory_file.sprite_img != undefined){
+      res.setHeader("Content-type","images/png");
+      res.send(memory_file.sprite_img)
+    }
+  })
 
 module.exports = router

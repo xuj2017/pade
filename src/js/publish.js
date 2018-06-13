@@ -47,7 +47,7 @@ function create_publish(success, fail) {
 }
 $('.publish_publish_btn').click(function () {
     var index = $(this).data('index');
-    // console.log(index)
+    $(this).addClass('disabled')
     $.ajax({
             url: '/publish/publish',
             type: 'POST',
@@ -62,8 +62,10 @@ $('.publish_publish_btn').click(function () {
             } else {
                 modal_alert('发布失败！' + json.message);
             }
+            $('.publish_publish_btn').removeClass('disabled')
         })
         .fail(function (error) {
             modal_alert(error.message);
+            $('.publish_publish_btn').removeClass('disabled')
         })
 })

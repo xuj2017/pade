@@ -247,6 +247,12 @@ let files = {
                 reject(error)
             })
         })
+    },
+    /**
+     * 获取sprite图片列表
+     */
+    getSpriteImg(){
+        return this.getFileBaseInfoSync('css/_sprite/*.{jpg,png,gif}',{})
     }
 }
 
