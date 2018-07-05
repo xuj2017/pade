@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}-前端集成开发环境</title>
-    {{!--<link rel="stylesheet" href="/css/bootstrap.flatly.css">--}}
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/flat-ui.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -24,8 +23,6 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
               <ul class="nav navbar-nav navbar-left" id="header_nav">
-                {{!--<li><a href="#fakelink">Menu Item<span class="navbar-unread">1</span></a></li>--}}
-                
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">页面与文件 <b class="caret"></b></a>
                   <span class="dropdown-arrow"></span>
@@ -33,65 +30,18 @@
                     <li><a href="/page">页面</a></li>
                     <li><a href="/page/js">JS</a></li>
                     <li><a href="/page/css">CSS</a></li>
-                    {{!-- <li class="divider"></li> --}}
                     <li><a href="/modules">模块</a></li>
-                    {{!-- <li class="divider"></li> --}}
                     <li><a href="/sprite">CSS Sprite</a></li>
-                    {{!-- <li class="divider"></li> --}}
                     <li><a href="/libs">Libs</a></li>
-                    {{!-- <li class="divider"></li> --}}
-                    {{!--<li><a href="/components/">组件</a></li>
-                    <li class="divider"></li>--}}
-                    {{!--<li><a href="#">开发文件结构图</a></li>--}}
-                    {{!-- <li><a href="/page/preview_map">预览文件结构图</a></li> --}}
-                  </ul>
+                   </ul>
                 </li>
-
                 <li><a href="/publish/">发布</a></li>
                 <li><a href="/proxy/">代理服务</a></li>
-                
-                {{!-- <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多 <b class="caret"></b></a>
-                  <span class="dropdown-arrow"></span>
-                  <ul class="dropdown-menu">
-                    <li><a href="/config/">项目配置</a></li>
-                    <li><a href="/config/js_compile">JS编译设置</a></li>
-                    <li><a href="/config/js_compress">JS压缩设置</a></li>
-                    <li><a href="/config/style_compile">样式编译设置</a></li>
-                    <li><a href="/config/style_compress">CSS压缩设置</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/help/">使用帮助</a></li>
-                    <li><a href="/help/todo">TO DO</a></li>
-                  </ul>
-                </li> --}}
-
                </ul>
                
             </div>
         
     </nav></div>
-    {{!-- <nav class="navbar navbar-default">
-        <div class="container">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="/" class="navbar-brand"><img src="/images/logo.png">前端项目管理服务</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" id="header_nav">
-                    <li><a href="/page/">页面与文件</a></li>
-                    <li><a href="/components/">组件</a></li>
-                    <li><a href="/page/sprite">CSS Sprite</a></li>
-                    <li><a href="/publish/">发布</a></li>
-                    <li><a href="/proxy/">代理服务</a></li>
-                    <li><a href="/config/">项目配置</a></li>
-                    <li><a href="/help/">使用帮助</a></li>
-                </ul>
-            </div>
-        </div>
-        </div>
-    </nav> --}}
-
     <div class="container">
         {{{body}}}
     </div>
@@ -100,7 +50,6 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/flat-ui.js"></script>    
     <script src="/js/handlebars.js"></script>
-    {{!--<script src="/js/bootstrap.js"></script>--}}
     <script src="/js/common.js"></script>
     {{{block "bodybottom"}}}
 </body>
