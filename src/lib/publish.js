@@ -85,12 +85,8 @@ module.exports = {
                                 includeSources: true
                             }
                         }
-
-
-                        if (global.config.js_compress && global.config.js_compress.console) {
-                            uglifyjs_option.compress = {}
-                            uglifyjs_option.compress.drop_console = true
-                        }
+                        uglifyjs_option.compress = {}
+                        uglifyjs_option.compress.drop_console = true
 
                         var uglifyjs_result = UglifyJS.minify(jscontent, uglifyjs_option);
                         if (uglifyjs_result.error != undefined) {
@@ -125,11 +121,6 @@ module.exports = {
                 }
         
                 let css_options = { compatibility: 'ie7' }
-                if (global.config) {
-                  if (global.config.css_compress_ie) {
-                    css_options.compatibility = global.config.css_compress_ie
-                  }
-                }
         
                 Promise.all(csss.map(v => file_make.compileStyle(v.path))).then(result => {
                   result.forEach((v, i) => {
@@ -218,10 +209,8 @@ module.exports = {
                             }
                         }
                     
-                        if(global.config.js_compress && global.config.js_compress.console){
-                            uglifyjs_option.compress = {};
-                            uglifyjs_option.compress.drop_console = true;
-                        }
+                        uglifyjs_option.compress = {};
+                        uglifyjs_option.compress.drop_console = true;
 
                         let uglifyjs_result = UglifyJS.minify(output,uglifyjs_option);
                         if(uglifyjs_result.error !== undefined){
