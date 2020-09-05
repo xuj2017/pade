@@ -28,7 +28,7 @@
     "extract-text-webpack-plugin": "^2.1.2",
     "fs-exists-sync": "^0.1.0",
     "glob": "^7.1.2",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.5.3",
     "http-proxy-middleware": "^0.18.0",
     "jsonfile": "^4.0.0",
     "less": "^3.0.1",
